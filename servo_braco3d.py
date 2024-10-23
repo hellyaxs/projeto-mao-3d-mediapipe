@@ -1,5 +1,6 @@
 from pyfirmata import Arduino,SERVO
 import time
+import threading
 
 board = Arduino('/dev/ttyUSB0')
 pin1 = 10
@@ -27,6 +28,12 @@ def abrir_fechar(pin,on_off):
         rotateServo(pin, 150)
     elif on_off == 0 and pin == 9:
         rotateServo(pin, 180)
+
+def abrir_fechar_thread(pin, on_off):
+    thread = threading.Thread(target=abrir_fechar, args=(pin, on_off))
+    thread.start()
+
+
 
 def testeTodos():
     rotateServo(pin1,0)

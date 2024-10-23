@@ -13,9 +13,8 @@ mpDwaw = mp.solutions.drawing_utils
 
 while True:
     success, img = cap.read()
-    frameRGB = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
     img = cv2.flip(img, 1)
-    frameRGB = cv2.flip(frameRGB, 1)
+    frameRGB = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
     results = Hands.process(frameRGB)
     handPoints = results.multi_hand_landmarks
     h, w, _ = img.shape
@@ -26,7 +25,6 @@ while True:
             #podemos enumerar esses pontos da seguinte forma
             for id, cord in enumerate(points.landmark):
                 cx, cy = int(cord.x * w), int(cord.y * h)
-                # cv2.putText(img, str(id), (cx, cy + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
                 cv2.circle(img,(cx,cy),4,(255,0,0),-1)
                 pontos.append((cx,cy))
 
@@ -37,36 +35,38 @@ while True:
                 distAnelar = pontos[13][1] - pontos[16][1]
                 distMinimo = pontos[17][1] - pontos[20][1]
 
-                # print(distPolegar)
 
                 if distPolegar <80:
 
-                    mao.abrir_fechar(10,0)
+                    mao.abrir_fechar_thread(10,0)
                 else:
-                    mao.abrir_fechar(10,1)
+                    mao.abrir_fechar_thread(10,1)
 
                 if distIndicador >=1:
-                    mao.abrir_fechar(9,1)
+                    mao.abrir_fechar_thread(9,1)
                 else:
-                    mao.abrir_fechar(9,0)
+                    mao.abrir_fechar_thread(9,0)
 
                 if distMedio >=1:
-                    mao.abrir_fechar(8,1)
+                    mao.abrir_fechar_thread(8,1)
                 else:
-                    mao.abrir_fechar(8,0)
+                    mao.abrir_fechar_thread(8,0)
 
                 if distAnelar >=1:
-                    mao.abrir_fechar(7,1)
+                    mao.abrir_fechar_thread(7,1)
                 else:
-                    mao.abrir_fechar(7,0)
+                    mao.abrir_fechar_thread(7,0)
 
                 if distMinimo >=1:
-                    mao.abrir_fechar(6,1)
+                    mao.abrir_fechar_thread(6,1)
                 else:
-                    mao.abrir_fechar(6,0)
+                    mao.abrir_fechar_thread(6,0)
     
     cv2.imshow('Imagem',img)
-    cv2.waitKey(1)
-
+    if (cv2.waitKey(1) & 0xFF == 27) or (cv2.getWindowProperty('Imagem', cv2.WND_PROP_VISIBLE) < 1):
+        break
+  
 
   
+cap.release()
+cv2.destroyAllWindows()
