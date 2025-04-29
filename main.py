@@ -4,8 +4,8 @@ import servo_braco3d as mao
 
 cap = cv2.VideoCapture(0)
 
-cap.set(3,640)
-cap.set(4,480)
+cap.set(3,840)
+cap.set(4,680)
 
 hands = mp.solutions.hands
 Hands = hands.Hands(max_num_hands=1)
