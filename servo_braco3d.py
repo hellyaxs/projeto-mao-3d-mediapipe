@@ -23,11 +23,13 @@ def abrir_fechar(pin,on_off):
     if on_off==1:
         rotateServo(pin, 0)
     elif on_off==0 and pin!=10 and pin!=9:
-        rotateServo(pin, 140)
+        rotateServo(pin, 180)
+    elif on_off==0 and pin==6:
+        rotateServo(pin, 130)    
     elif on_off == 0 and pin == 10:
         rotateServo(pin, 150)
     elif on_off == 0 and pin == 9:
-        rotateServo(pin, 180)
+        rotateServo(pin, 280)
 
 def abrir_fechar_thread(pin, on_off):
     thread = threading.Thread(target=abrir_fechar, args=(pin, on_off))
